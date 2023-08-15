@@ -16,8 +16,8 @@ public class JndiObjectFactoryLookupExample {
         environment.setProperty(DirContext.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
         environment.setProperty(DirContext.PROVIDER_URL, "ldap://localhost:11389");
         environment.setProperty(DirContext.SECURITY_PRINCIPAL, "cn=Directory Manager");
-        environment.setProperty(DirContext.SECURITY_CREDENTIALS, "opendj");
-        environment.setProperty(DirContext.OBJECT_FACTORIES, "com.inflinx.book.ldap.PatronObjectFactory");
+        environment.setProperty(DirContext.SECURITY_CREDENTIALS, "secret");
+        environment.setProperty(DirContext.OBJECT_FACTORIES, "com.apress.book.ldap.PatronObjectFactory");
 
         return new InitialLdapContext(environment, null);
     }
