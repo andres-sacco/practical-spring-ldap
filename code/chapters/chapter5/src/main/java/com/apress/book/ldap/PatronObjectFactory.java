@@ -12,21 +12,21 @@ import com.apress.book.ldap.domain.Patron;
 
 public class PatronObjectFactory implements DirObjectFactory {
 
-	@Override
-	public Object getObjectInstance(Object obj, Name name, Context nameCtx,
-			Hashtable<?, ?> environment, Attributes attrs) throws Exception {
-		
-		Patron patron = new Patron();
-		patron.setUid(attrs.get("uid").toString());
-		patron.setFullName(attrs.get("cn").toString());
-		
-		return patron;
-	}
-	
-	@Override
-	public Object getObjectInstance(Object obj, Name name, Context nameCtx,
-			Hashtable<?, ?> environment) throws Exception {
-		
-		return getObjectInstance(obj, name, nameCtx, environment, new BasicAttributes());
-	}
+    @Override
+    public Object getObjectInstance(Object obj, Name name, Context nameCtx, Hashtable<?, ?> environment,
+            Attributes attrs) throws Exception {
+
+        Patron patron = new Patron();
+        patron.setUid(attrs.get("uid").toString());
+        patron.setFullName(attrs.get("cn").toString());
+
+        return patron;
+    }
+
+    @Override
+    public Object getObjectInstance(Object obj, Name name, Context nameCtx, Hashtable<?, ?> environment)
+            throws Exception {
+
+        return getObjectInstance(obj, name, nameCtx, environment, new BasicAttributes());
+    }
 }

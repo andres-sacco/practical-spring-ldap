@@ -13,74 +13,73 @@ import org.springframework.stereotype.Repository;
 
 import com.apress.book.ldap.repository.mapper.EmployeeContextMapper;
 
-
 @Repository("employeeDao")
 public class EmployeeDaoLdapImpl implements EmployeeDao {
 
-	@Autowired
-	@Qualifier("ldapTemplate")
-	private LdapTemplate ldapTemplate;
+    @Autowired
+    @Qualifier("ldapTemplate")
+    private LdapTemplate ldapTemplate;
 
-	@Override
-	public List<Employee> findAll() {
-		return ldapTemplate.search("", "(objectClass=inetOrgPerson)", new EmployeeContextMapper());
-	}
-	
-	@Override
-	public Employee find(String id) {
-		DistinguishedName dn = getDistinguishedName(id);
-		return ldapTemplate.lookup(dn, new EmployeeContextMapper());
-	}
+    @Override
+    public List<Employee> findAll() {
+        return ldapTemplate.search("", "(objectClass=inetOrgPerson)", new EmployeeContextMapper());
+    }
 
+    @Override
+    public Employee find(String id) {
+        DistinguishedName dn = getDistinguishedName(id);
+        return ldapTemplate.lookup(dn, new EmployeeContextMapper());
+    }
 
+    @Override
+    public void create(Employee employee) {
+        DistinguishedName dn = getDistinguishedName(employee.getUid());
 
-	@Override
-	public void create(Employee employee) {
-		DistinguishedName dn = getDistinguishedName(employee.getUid());
+        DirContextAdapter context = new DirContextAdapter();
+        context.setDn(dn);
+        context.setAttributeValues("objectClass",
+                new String[] { "top", "person", "organizationalperson", "inetorgperson" });
+        context.setAttributeValue("givenName", employee.getFirstName());
+        context.setAttributeValue("sn", employee.getLastName());
+        context.setAttributeValue("cn", employee.getCommonName());
+        context.setAttributeValue("mail", employee.getEmail());
+        context.setAttributeValue("employeeNumber", employee.getEmployeeNumber());
+        context.setAttributeValues("telephoneNumber", employee.getPhone());
 
-		DirContextAdapter context = new DirContextAdapter();
-		context.setDn(dn);
-		context.setAttributeValues("objectClass", new String[] {"top", "person", "organizationalperson", "inetorgperson"});
-		context.setAttributeValue("givenName", employee.getFirstName());
-		context.setAttributeValue("sn", employee.getLastName());
-		context.setAttributeValue("cn", employee.getCommonName());
-		context.setAttributeValue("mail", employee.getEmail());
-		context.setAttributeValue("employeeNumber", employee.getEmployeeNumber());
-		context.setAttributeValues("telephoneNumber", employee.getPhone());
-	
-		ldapTemplate.bind(context);
-	}
+        ldapTemplate.bind(context);
+    }
 
-	@Override
-	public void update(Employee employee) {
-		DistinguishedName dn = getDistinguishedName(employee.getUid());
-		
-		DirContextOperations context = ldapTemplate.lookupContext(dn);
+    @Override
+    public void update(Employee employee) {
+        DistinguishedName dn = getDistinguishedName(employee.getUid());
 
-		context.setAttributeValues("objectClass", new String[] {"top", "person", "organizationalperson", "inetorgperson"});
-		context.setAttributeValue("givenName", employee.getFirstName());
-		context.setAttributeValue("sn", employee.getLastName());
-		context.setAttributeValue("cn", employee.getCommonName());
-		context.setAttributeValue("mail", employee.getEmail());
-		context.setAttributeValue("employeeNumber", employee.getEmployeeNumber());
-		context.setAttributeValues("telephoneNumber", employee.getPhone());
-	
-		ldapTemplate.modifyAttributes(context);
-	}
-	
-	@Override
-	public void delete(String id) {
-		DistinguishedName dn = getDistinguishedName(id);
-		ldapTemplate.unbind(dn);
-	}
+        DirContextOperations context = ldapTemplate.lookupContext(dn);
 
-	private DistinguishedName getDistinguishedName(String id) {
-		DistinguishedName dn = new DistinguishedName();
-		dn.add("dc", "com");
-		dn.add("dc", "inflinx");
-		dn.add("ou", "employees");
-		dn.add("uid", id);
-		return dn;
-	}
+        context.setAttributeValues("objectClass",
+                new String[] { "top", "person", "organizationalperson", "inetorgperson" });
+        context.setAttributeValue("givenName", employee.getFirstName());
+        context.setAttributeValue("sn", employee.getLastName());
+        context.setAttributeValue("cn", employee.getCommonName());
+        context.setAttributeValue("mail", employee.getEmail());
+        context.setAttributeValue("employeeNumber", employee.getEmployeeNumber());
+        context.setAttributeValues("telephoneNumber", employee.getPhone());
+
+        ldapTemplate.modifyAttributes(context);
+    }
+
+    @Override
+    public void delete(String id) {
+        DistinguishedName dn = getDistinguishedName(id);
+        ldapTemplate.unbind(dn);
+    }
+
+    private DistinguishedName getDistinguishedName(String id) {
+        DistinguishedName dn = new DistinguishedName();
+        dn.add("dc", "com");
+        dn.add("dc", "inflinx");
+        dn.add("ou", "employees");
+        dn.add("uid", id);
+        return dn;
+    }
 
 }
