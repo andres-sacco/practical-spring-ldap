@@ -34,24 +34,24 @@ public class EmployeeDaoLdapImplTest {
         assertNotNull(employee);
     }
 
-    @Test
-    public void should_create_a_new_employee() {
-        String empUid = "employee1000";
+@Test
+public void should_create_a_new_employee() {
+    String empUid = "employee1000";
 
-        Employee employee = new Employee();
-        employee.setUid(empUid);
-        employee.setFirstName("Test");
-        employee.setLastName("Employee1000");
-        employee.setCommonName("Test Employee1000");
-        employee.setEmail("employee1000@inflinx.com");
-        employee.setEmployeeNumber("45678");
-        employee.setPhone(new String[] { "801-100-1200" });
+    Employee employee = new Employee();
+    employee.setUid(empUid);
+    employee.setFirstName("Test");
+    employee.setLastName("Employee1000");
+    employee.setCommonName("Test Employee1000");
+    employee.setEmail("employee1000@inflinx.com");
+    employee.setEmployeeNumber("45678");
+    employee.setPhone(new String[] { "801-100-1200" });
 
-        employeeDao.create(employee);
+    employeeDao.create(employee);
 
-        employee = employeeDao.find(empUid);
-        assertNotNull(employee);
-    }
+    employee = employeeDao.find(empUid);
+    assertNotNull(employee);
+}
 
     @Test
     public void should_update_an_employee() {

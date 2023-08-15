@@ -11,7 +11,8 @@
 	<ldap:context-source id="contextSource"
 						 password="${ldap.password}"
 						 url="${ldap.url}"
-						 username="${ldap.userDn}" />
+						 username="${ldap.userDn}"
+						 base="${ldap.base.employees}"/>
 
 	<!-- Populates the LDAP server with initial data -->
 	<bean class="org.springframework.ldap.test.LdifPopulator" depends-on="embeddedLdapServer">
