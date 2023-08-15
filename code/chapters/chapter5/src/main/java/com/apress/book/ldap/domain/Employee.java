@@ -9,7 +9,6 @@ public class Employee {
     private String lastName;
     private String commonName;
     private String email;
-    private int departmentNumber;
     private String employeeNumber;
     private String[] phone;
 
@@ -43,14 +42,6 @@ public class Employee {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public int getDepartmentNumber() {
-        return departmentNumber;
-    }
-
-    public void setDepartmentNumber(int departmentNumber) {
-        this.departmentNumber = departmentNumber;
     }
 
     public String getEmployeeNumber() {
