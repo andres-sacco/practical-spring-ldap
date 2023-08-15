@@ -44,7 +44,6 @@ public class EmployeeDaoLdapImplTest {
         employee.setLastName("Employee1000");
         employee.setCommonName("Test Employee1000");
         employee.setEmail("employee1000@inflinx.com");
-        employee.setDepartmentNumber(12356);
         employee.setEmployeeNumber("45678");
         employee.setPhone(new String[] { "801-100-1200" });
 
