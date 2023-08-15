@@ -1,4 +1,4 @@
-package com.inflinx.book.ldap.domain;
+package com.apress.book.ldap.domain;
 
 import java.util.Arrays;
 

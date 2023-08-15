@@ -1,4 +1,4 @@
-package com.inflinx.book.ldap;
+package com.apress.book.ldap;
 
 import java.util.Properties;
 
@@ -7,7 +7,7 @@ import javax.naming.directory.DirContext;
 import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 
-import com.inflinx.book.ldap.domain.Patron;
+import com.apress.book.ldap.domain.Patron;
 
 public class JndiObjectFactoryLookupExample {
 

@@ -1,8 +1,8 @@
-package com.inflinx.book.ldap.repository;
+package com.apress.book.ldap.repository;
 
 import java.util.List;
 
-import com.inflinx.book.ldap.domain.Employee;
+import com.apress.book.ldap.domain.Employee;
 
 public interface EmployeeDao {
 

@@ -1,4 +1,4 @@
-package com.inflinx.book.ldap;
+package com.apress.book.ldap;
 
 import java.util.Hashtable;
 
@@ -8,7 +8,7 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.BasicAttributes;
 import javax.naming.spi.DirObjectFactory;
 
-import com.inflinx.book.ldap.domain.Patron;
+import com.apress.book.ldap.domain.Patron;
 
 public class PatronObjectFactory implements DirObjectFactory {
 
