@@ -8,8 +8,12 @@ import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 
 import com.apress.book.ldap.domain.Patron;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JndiObjectFactoryLookupExample {
+
+    private static final Logger logger = LoggerFactory.getLogger(JndiObjectFactoryLookupExample.class);
 
     private LdapContext getContext() throws NamingException {
         Properties environment = new Properties();
@@ -29,7 +33,7 @@ public class JndiObjectFactoryLookupExample {
             LdapContext context = getContext();
             patron = (Patron) context.lookup(dn);
         } catch (NamingException e) {
-            e.printStackTrace();
+            logger.error(e.getClass() + ": " + e.getMessage());
         }
         return patron;
     }
