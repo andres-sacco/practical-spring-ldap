@@ -1,8 +1,3 @@
-dn: dc=inflinx,dc=com
-objectClass: top
-objectClass: domain
-dc: inflinx
-
 dn: ou=patrons,dc=inflinx,dc=com
 objectClass: top
 objectClass: organizationalunit
@@ -13,9 +8,9 @@ objectClass: top
 objectClass: person
 objectClass: organizationalperson
 objectClass: inetorgperson
-givenName: Jacob
-sn: Smith
-cn: Jacob Smith
+givenName: Aaccf
+sn: Amar
+cn: Aaccf Amar
 initials: ARA
 uid: patron0
 mail: patron0@inflinx.com
@@ -24,10 +19,10 @@ telephoneNumber: +1 688 926 3146
 homePhone: +1 092 210 9726
 mobile: +1 189 955 5012
 street: 08904 Sixth Street
-l: Midvale
-st: UT
-postalCode: 84047
-postalAddress: Jacob Smith$08904 Sixth Street$Fairbanks, UT 84047
+l: Fairbanks
+st: IA
+postalCode: 10928
+postalAddress: Aaccf Amar$08904 Sixth Street$Fairbanks, IA  10928
 
 dn: uid=patron1,ou=patrons,dc=inflinx,dc=com
 objectClass: top
@@ -328,9 +323,9 @@ objectClass: top
 objectClass: person
 objectClass: organizationalperson
 objectClass: inetorgperson
-givenName: jacob
-sn: Brady
-cn: jacob Brady
+givenName: Abdalla
+sn: Abdou
+cn: Abdalla Abdou
 initials: AXA
 uid: patron15
 mail: patron15@inflinx.com
@@ -342,7 +337,7 @@ street: 83899 Laurel Street
 l: Charlottesville
 st: WI
 postalCode: 60548
-postalAddress: jacob Brady$83899 Laurel Street$Charlottesville, WI  60548
+postalAddress: Abdalla Abdou$83899 Laurel Street$Charlottesville, WI  60548
 
 dn: uid=patron16,ou=patrons,dc=inflinx,dc=com
 objectClass: top
@@ -900,6 +895,7 @@ sn: Achkar
 cn: Addons Achkar
 initials: AOA
 uid: patron42
+mail: patron42@inflinx.com
 userPassword: password
 telephoneNumber: +1 907 643 9815
 homePhone: +1 566 005 0066
@@ -1041,9 +1037,9 @@ objectClass: top
 objectClass: person
 objectClass: organizationalperson
 objectClass: inetorgperson
-givenName: Jason
-sn: Brown
-cn: Jason Brown
+givenName: Adelheid
+sn: Acs
+cn: Adelheid Acs
 initials: AUA
 uid: patron49
 mail: patron49@inflinx.com
@@ -1055,7 +1051,7 @@ street: 93406 Poplar Street
 l: Odessa
 st: VT
 postalCode: 46190
-postalAddress: Jason Brown$93406 Poplar Street$Odessa, VT  46190
+postalAddress: Adelheid Acs$93406 Poplar Street$Odessa, VT  46190
 
 dn: uid=patron50,ou=patrons,dc=inflinx,dc=com
 objectClass: top
@@ -1235,6 +1231,7 @@ sn: Adamowicz
 cn: Adeniyi Adamowicz
 initials: AUA
 uid: patron58
+mail: patron58@inflinx.com
 userPassword: password
 telephoneNumber: +1 310 056 3330
 homePhone: +1 090 173 3800
@@ -1465,6 +1462,7 @@ sn: Aderhold
 cn: Adoree Aderhold
 initials: AMA
 uid: patron69
+mail: patron69@inflinx.com
 userPassword: password
 telephoneNumber: +1 700 871 3572
 homePhone: +1 757 398 2510
@@ -1485,6 +1483,7 @@ sn: Adey
 cn: Adorne Adey
 initials: AXA
 uid: patron70
+mail: patron70@inflinx.com
 userPassword: password
 telephoneNumber: +1 316 737 4099
 homePhone: +1 061 144 0730
@@ -1637,10 +1636,10 @@ telephoneNumber: +1 383 512 4763
 homePhone: +1 786 934 6077
 mobile: +1 689 245 7864
 street: 21144 Church Street
-l: Sandy
-st: UT
-postalCode: 84121
-postalAddress: Adriane Admin-mtv$21144 Church Street$Sandy, UT  84121
+l: Palm Springs
+st: MT
+postalCode: 90270
+postalAddress: Adriane Admin-mtv$21144 Church Street$Palm Springs, MT  90270
 
 dn: uid=patron78,ou=patrons,dc=inflinx,dc=com
 objectClass: top
@@ -2114,7 +2113,6 @@ sn: Ahad
 cn: Aggy Ahad
 initials: ADA
 uid: patron100
-mail: patron100@inflinx.com
 userPassword: password
 telephoneNumber: +1 232 025 4008
 homePhone: +1 686 090 0035

@@ -275,7 +275,7 @@
 				</executions>
 			</plugin>
 		</plugins>
-		<finalName>chapter3</finalName>
+		<finalName>chapter5</finalName>
 	</build>
 
 </project>

@@ -49,23 +49,23 @@ public void create(Employee employee) {
     ldapTemplate.bind(context);
 }
 
-    @Override
-    public void update(Employee employee) {
-        DistinguishedName dn = getDistinguishedName(employee.getUid());
+@Override
+public void update(Employee employee) {
+    DistinguishedName dn = getDistinguishedName(employee.getUid());
 
-        DirContextOperations context = ldapTemplate.lookupContext(dn);
+    DirContextOperations context = ldapTemplate.lookupContext(dn);
 
-        context.setAttributeValues("objectClass",
-                new String[] { "top", "person", "organizationalperson", "inetorgperson" });
-        context.setAttributeValue("givenName", employee.getFirstName());
-        context.setAttributeValue("sn", employee.getLastName());
-        context.setAttributeValue("cn", employee.getCommonName());
-        context.setAttributeValue("mail", employee.getEmail());
-        context.setAttributeValue("employeeNumber", employee.getEmployeeNumber());
-        context.setAttributeValues("telephoneNumber", employee.getPhone());
+    context.setAttributeValues("objectClass",
+            new String[] { "top", "person", "organizationalperson", "inetorgperson" });
+    context.setAttributeValue("givenName", employee.getFirstName());
+    context.setAttributeValue("sn", employee.getLastName());
+    context.setAttributeValue("cn", employee.getCommonName());
+    context.setAttributeValue("mail", employee.getEmail());
+    context.setAttributeValue("employeeNumber", employee.getEmployeeNumber());
+    context.setAttributeValues("telephoneNumber", employee.getPhone());
 
-        ldapTemplate.modifyAttributes(context);
-    }
+    ldapTemplate.modifyAttributes(context);
+}
 
     @Override
     public void delete(String id) {
