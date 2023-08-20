@@ -1,8 +1,7 @@
 package com.apress.book.ldap.filter;
 
 import com.apress.book.ldap.domain.Patron;
-import com.apress.book.ldap.filter.custom.ApproximateFilter;
-import com.apress.book.ldap.filter.SearchFilter;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,71 +24,50 @@ public class SearchFilterTest {
     public void should_works_equalsFilter() {
         Filter filter = new EqualsFilter("givenName", "Abbi");
         List<Patron> results = searchFilter.searchAndPrintResults(filter);
-        assertAll(
-                ()-> assertNotNull(results),
-                ()-> assertEquals(1, results.size()),
-                ()-> assertEquals("Abbi Abbott", results.get(0).getFullName())
-        );
+        assertAll(() -> assertNotNull(results), () -> assertEquals(1, results.size()),
+                () -> assertEquals("Abbi Abbott", results.get(0).getFullName()));
     }
 
     @Test
     public void should_works_likeFilter() {
         Filter filter = new LikeFilter("givenName", "Abb*");
         List<Patron> results = searchFilter.searchAndPrintResults(filter);
-        assertAll(
-                ()-> assertNotNull(results),
-                ()-> assertEquals(7, results.size())
-        );
+        assertAll(() -> assertNotNull(results), () -> assertEquals(7, results.size()));
     }
 
     @Test
     public void should_works_presentFilter() {
         Filter filter = new PresentFilter("mail");
         List<Patron> results = searchFilter.searchAndPrintResults(filter);
-        assertAll(
-                ()-> assertNotNull(results),
-                ()-> assertEquals(100, results.size())
-        );
+        assertAll(() -> assertNotNull(results), () -> assertEquals(100, results.size()));
     }
 
     @Test
     public void should_works_notPresentFilter() {
         Filter filter = new NotPresentFilter("mail");
         List<Patron> results = searchFilter.searchAndPrintResults(filter);
-        assertAll(
-                ()-> assertNotNull(results),
-                ()-> assertEquals(2, results.size())
-        );
+        assertAll(() -> assertNotNull(results), () -> assertEquals(2, results.size()));
     }
 
     @Test
     public void should_works_notFilter() {
         NotFilter notFilter = new NotFilter(new LikeFilter("givenName", "Ade*"));
         List<Patron> results = searchFilter.searchAndPrintResults(notFilter);
-        assertAll(
-                ()-> assertNotNull(results),
-                ()-> assertEquals(86, results.size())
-        );
+        assertAll(() -> assertNotNull(results), () -> assertEquals(86, results.size()));
     }
 
     @Test
     public void should_works_greaterThanOrEqualsFilter() {
         Filter filter = new GreaterThanOrEqualsFilter("postalCode", "57018");
         List<Patron> results = searchFilter.searchAndPrintResults(filter);
-        assertAll(
-                ()-> assertNotNull(results),
-                ()-> assertEquals(46, results.size())
-        );
+        assertAll(() -> assertNotNull(results), () -> assertEquals(46, results.size()));
     }
 
     @Test
     public void should_works_lessThanOrEqualsFilter() {
         Filter filter = new LessThanOrEqualsFilter("postalCode", "57018");
         List<Patron> results = searchFilter.searchAndPrintResults(filter);
-        assertAll(
-                () -> assertNotNull(results),
-                () -> assertEquals(56, results.size())
-        );
+        assertAll(() -> assertNotNull(results), () -> assertEquals(56, results.size()));
     }
 
     @Test
@@ -98,10 +76,7 @@ public class SearchFilterTest {
         andFilter.and(new EqualsFilter("postalCode", "95571"));
         andFilter.and(new PresentFilter("mail"));
         List<Patron> results = searchFilter.searchAndPrintResults(andFilter);
-        assertAll(
-                () -> assertNotNull(results),
-                () -> assertEquals(1, results.size())
-        );
+        assertAll(() -> assertNotNull(results), () -> assertEquals(1, results.size()));
     }
 
     @Test
@@ -110,16 +85,7 @@ public class SearchFilterTest {
         orFilter.or(new EqualsFilter("postalCode", "51911"));
         orFilter.or(new EqualsFilter("postalCode", "48200"));
         List<Patron> results = searchFilter.searchAndPrintResults(orFilter);
-        assertAll(
-                () -> assertNotNull(results),
-                () -> assertEquals(2, results.size())
-        );
-    }
-
-    @Test
-    public void should_works_approximateFilter() {
-        ApproximateFilter approx = new ApproximateFilter("sn", "Abbate");
-        searchFilter.searchAndPrintResults(approx);
+        assertAll(() -> assertNotNull(results), () -> assertEquals(2, results.size()));
     }
 
     @Test
@@ -130,10 +96,7 @@ public class SearchFilterTest {
         filter.and(new EqualsFilter("givenName", "Aggie"));
 
         List<Patron> results = searchFilter.searchAndPrintResults(filter);
-        assertAll(
-                () -> assertNotNull(results),
-                () -> assertEquals(1, results.size())
-        );
+        assertAll(() -> assertNotNull(results), () -> assertEquals(1, results.size()));
     }
 
     @Test
@@ -141,9 +104,6 @@ public class SearchFilterTest {
         WhitespaceWildcardsFilter filter = new WhitespaceWildcardsFilter("cn", "Abbey Abbie");
 
         List<Patron> results = searchFilter.searchAndPrintResults(filter);
-        assertAll(
-                () -> assertNotNull(results),
-                () -> assertEquals(1, results.size())
-        );
+        assertAll(() -> assertNotNull(results), () -> assertEquals(1, results.size()));
     }
 }

@@ -21,10 +21,7 @@ public class SearchBuilderTest {
     @Test
     public void should_works_builder() {
         List<Patron> results = searchBuilder.getPatronByLastNameAndPostalCode("Abbott", "07007");
-        assertAll(
-                ()-> assertNotNull(results),
-                ()-> assertEquals(1, results.size()),
-                ()-> assertEquals("Abbi Abbott", results.get(0).getFullName())
-        );
+        assertAll(() -> assertNotNull(results), () -> assertEquals(1, results.size()),
+                () -> assertEquals("Abbi Abbott", results.get(0).getFullName()));
     }
 }

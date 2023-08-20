@@ -25,13 +25,8 @@ public class SearchBuilder {
 
     public List<Patron> getPatronByLastNameAndPostalCode(String lastName, String postalCode) {
 
-        LdapQuery query = query()
-                .countLimit(10)
-                .base(LdapUtils.emptyLdapName())
-                .where("objectclass").is("person")
-                .and("sn").is(lastName)
-                .and("postalCode").is(postalCode)
-                .and("uid").isPresent();
+        LdapQuery query = query().countLimit(10).base(LdapUtils.emptyLdapName()).where("objectclass").is("person")
+                .and("sn").is(lastName).and("postalCode").is(postalCode).and("uid").isPresent();
 
         return ldapTemplate.search(query, new PatronContextMapper());
     }

@@ -21,7 +21,8 @@ public class SearchFilter {
     private LdapTemplate ldapTemplate;
 
     public List<Patron> searchAndPrintResults(Filter filter) {
-        List<Patron> results = ldapTemplate.search("ou=patrons,dc=inflinx,dc=com", filter.encode(), new PatronContextMapper());
+        List<Patron> results = ldapTemplate.search("ou=patrons,dc=inflinx,dc=com", filter.encode(),
+                new PatronContextMapper());
 
         logger.info("Results found in search: " + results.size());
         for (Patron patron : results) {
