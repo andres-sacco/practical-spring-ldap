@@ -18,7 +18,7 @@
 			<constructor-arg name="contextSource" ref="contextSource" />
 			<constructor-arg name="managedClasses">
 				<set>
-					<value>com.inflinx.book.ldap.custom.Patron</value>
+					<value>com.apress.book.ldap.custom.Patron</value>
 				</set>
 			</constructor-arg>
 		</bean>
@@ -26,8 +26,8 @@
 		<bean id="fromStringConverter" class="org.springframework.ldap.odm.typeconversion.impl.converters.FromStringConverter" />
 		<bean id="toStringConverter" class="org.springframework.ldap.odm.typeconversion.impl.converters.ToStringConverter" />
 	
-		<bean id="fromPhoneNumberConverter" class="com.inflinx.book.ldap.custom.FromPhoneNumberConverter" />
-		<bean id="toPhoneNumberConverter" class="com.inflinx.book.ldap.custom.ToPhoneNumberConverter" />
+		<bean id="fromPhoneNumberConverter" class="com.apress.book.ldap.custom.FromPhoneNumberConverter" />
+		<bean id="toPhoneNumberConverter" class="com.apress.book.ldap.custom.ToPhoneNumberConverter" />
 		
 		<!-- Configuration information for a single instance of FromString -->
 		<bean id="fromStringConverterConfig" class="org.springframework.ldap.odm.typeconversion.impl.ConverterManagerFactoryBean$ConverterConfig">
@@ -50,7 +50,7 @@
 			<property name="converter" ref="fromPhoneNumberConverter" />
 			<property name="fromClasses">
 				<set>
-					<value>com.inflinx.book.ldap.custom.PhoneNumber</value>
+					<value>com.apress.book.ldap.custom.PhoneNumber</value>
 				</set>
 			</property>
 			<property name="toClasses">
@@ -69,7 +69,7 @@
 			</property>
 			<property name="toClasses">
 				<set>
-					<value>com.inflinx.book.ldap.custom.PhoneNumber</value>
+					<value>com.apress.book.ldap.custom.PhoneNumber</value>
 				</set>
 			</property>
 		</bean>		

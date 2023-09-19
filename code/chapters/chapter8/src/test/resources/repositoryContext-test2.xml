@@ -18,10 +18,10 @@
 			<property name="contextSource" ref="contextSource" />
 			<property name="managedClasses">
 				<set>
-					<value>com.inflinx.book.ldap.domain.Patron</value>
+					<value>com.apress.book.ldap.domain.Patron</value>
 				</set>
 			</property>
 		</bean>
 		
-		<bean id="converterManager" class="com.inflinx.book.ldap.converter.DefaultConverterManagerImpl" />
+		<bean id="converterManager" class="com.apress.book.ldap.converter.DefaultConverterManagerImpl" />
 </beans>		

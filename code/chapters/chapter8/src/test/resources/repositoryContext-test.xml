@@ -18,7 +18,7 @@
 			<constructor-arg name="contextSource" ref="contextSource" />
 			<constructor-arg name="managedClasses">
 				<set>
-					<value>com.inflinx.book.ldap.domain.Patron</value>
+					<value>com.apress.book.ldap.domain.Patron</value>
 				</set>
 			</constructor-arg>
 		</bean>
