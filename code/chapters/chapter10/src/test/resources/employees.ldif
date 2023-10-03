@@ -1,8 +1,3 @@
-dn: dc=inflinx,dc=com
-objectClass: top
-objectClass: domain
-dc: inflinx
-
 dn: ou=employees,dc=inflinx,dc=com
 objectClass: top
 objectClass: organizationalunit
@@ -44,7 +39,7 @@ initials: CZA
 employeeNumber: 1
 uid: employee1
 mail: employee1@inflinx.com
-userPassword: pwd
+userPassword: password
 telephoneNumber: +1 464 254 7405
 homePhone: +1 100 288 5885
 pager: +1 031 642 0780

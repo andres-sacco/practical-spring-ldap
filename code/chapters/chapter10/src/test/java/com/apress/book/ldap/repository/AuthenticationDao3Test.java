@@ -1,0 +1,24 @@
+package com.apress.book.ldap.repository;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration("classpath:repositoryContext-test.xml")
+class AuthenticationDao3Test {
+    @Autowired
+    @Qualifier("authenticationDao3")
+    private AuthenticationDao authenticationDao;
+
+    @Test
+    void should_authentication_works() {
+        boolean authResult = authenticationDao.authenticate("patron0", "invalidPassword");
+        assertFalse(authResult);
+    }
+}
