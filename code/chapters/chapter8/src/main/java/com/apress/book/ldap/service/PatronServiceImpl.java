@@ -3,11 +3,9 @@ package com.apress.book.ldap.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ldap.core.DistinguishedName;
-import org.springframework.ldap.odm.core.OdmManager;
+import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.stereotype.Service;
-
 import com.apress.book.ldap.domain.Patron;
-
 
 @Service("patronService")
 public class PatronServiceImpl implements PatronService {
@@ -15,28 +13,28 @@ public class PatronServiceImpl implements PatronService {
 	private static final String PATRON_BASE  = "ou=patrons,dc=inflinx,dc=com";
 	
 	@Autowired
-	@Qualifier("odmManager")
-	private OdmManager odmManager;
+	@Qualifier("ldapTemplate")
+	private LdapTemplate ldapTemplate;
 
 	@Override
 	public void create(Patron patron) {
-		odmManager.create(patron);
+		ldapTemplate.create(patron);
 	}
 
 	@Override
 	public void update(Patron patron) {
-		odmManager.update(patron);
+		ldapTemplate.update(patron);
 	}
 
 	@Override
 	public Patron find(String id) {
 		DistinguishedName dn = new DistinguishedName(PATRON_BASE);
 		dn.add("uid", id);
-		return odmManager.read(Patron.class, dn);
+		return ldapTemplate.findByDn(dn, Patron.class);
 	}
 	
 	@Override
 	public void delete(String id) {
-		odmManager.delete(find(id));
+		ldapTemplate.delete(find(id));
 	}
 }

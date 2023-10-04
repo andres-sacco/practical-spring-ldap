@@ -1,45 +1,24 @@
 package com.apress.book.ldap.custom;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.ldapunit.util.LdapUnitUtils;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.ldap.NameNotFoundException;
 import org.springframework.ldap.core.DistinguishedName;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:repositoryContext-test3.xml")
-public class PatronServiceImplCustomTest {
+import static org.junit.jupiter.api.Assertions.*;
+
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration("classpath:repositoryContext-test-converter.xml")
+class PatronServiceImplCustomTest {
 
 	@Autowired
 	private PatronService patronService;
-	
-	private static final int PORT = 12389;
-	private static final String ROOT_DN = "dc=inflinx,dc=com";
 
-	@Before
-	public void setup() throws Exception {
-		System.out.println("Inside the setup");
-		LdapUnitUtils.loadData(new ClassPathResource("patrons.ldif"), PORT);
-	}
-	
-	@After
-	public void teardown() throws Exception {
-		System.out.println("Inside the teardown");
-		LdapUnitUtils.clearSubContexts(new DistinguishedName(ROOT_DN), PORT);
-	}
 
 	@Test
-	public void testService() {
+	void should_create_a_patron() {
 		Patron patron = new Patron();
 		patron.setDn(new DistinguishedName("uid=patron10001,ou=patrons,dc=inflinx,dc=com"));
 		patron.setFirstName("Patron");
@@ -48,29 +27,47 @@ public class PatronServiceImplCustomTest {
 		patron.setMail("balaji@inflinx.com");
 		patron.setEmployeeNumber(1234);
 		patron.setPhoneNumber(new PhoneNumber(801, 864, 8050));
-		
+
 		patronService.create(patron);
-		
+
 		// Lets read the patron
-		patron = patronService.find("patron10001");
+		Patron result = patronService.find("patron10001");
+		assertAll(
+				() -> assertNotNull(result),
+				() -> assertEquals(patron.getDn().toString(), result.getDn().toString()),
+				() -> assertEquals(801, patron.getPhoneNumber().getAreaCode()),
+				() -> assertEquals(864, patron.getPhoneNumber().getExchange()),
+				() -> assertEquals(8050, patron.getPhoneNumber().getExtension())
+		);
+	}
+
+	@Test
+	void should_find_a_patron() {
+		Patron result = patronService.find("patron100");
+		assertAll(
+				() -> assertNotNull(result),
+				() -> assertEquals("uid=patron100,ou=patrons,dc=inflinx,dc=com", result.getDn().toString()),
+				() -> assertEquals(232, result.getPhoneNumber().getAreaCode()),
+				() -> assertEquals(25, result.getPhoneNumber().getExchange()),
+				() -> assertEquals(4008, result.getPhoneNumber().getExtension())
+		);
+	}
+
+	@Test
+	void should_update_a_patron() {
+		Patron patron = patronService.find("patron1");
 		assertNotNull(patron);
-		System.out.println(patron.getPhoneNumber());
-		
-		patron.setPhoneNumber(new PhoneNumber(435, 757, 9369)); 
+
+		patron.setPhoneNumber(new PhoneNumber(1, 2, 3));
 		patronService.update(patron);
-		System.out.println("updated phone: " + patron.getPhoneNumber());
-		
-		
-		patron = patronService.find("patron10001");
-		System.out.println("Read the phone number: " + patron.getPhoneNumber()); 
-		assertEquals(patron.getPhoneNumber(), new PhoneNumber(435, 757, 9369));
-		
-		patronService.delete("patron10001");
-		try {
-			patron = patronService.find("patron10001");
-			assertNull(patron);
-		}
-		catch(NameNotFoundException e) {
-		}
+
+		Patron result = patronService.find("patron1");
+		assertAll(
+				() -> assertNotNull(result),
+				() -> assertEquals("uid=patron1,ou=patrons,dc=inflinx,dc=com", result.getDn().toString()),
+				() -> assertEquals(1, result.getPhoneNumber().getAreaCode()),
+				() -> assertEquals(2, result.getPhoneNumber().getExchange()),
+				() -> assertEquals(3, result.getPhoneNumber().getExtension())
+		);
 	}
 }

@@ -1,48 +1,27 @@
 package com.apress.book.ldap.service;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.ldapunit.util.LdapUnitUtils;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.ldap.NameNotFoundException;
 import org.springframework.ldap.core.DistinguishedName;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.apress.book.ldap.domain.Patron;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration("classpath:repositoryContext-test.xml")
-//@ContextConfiguration("classpath:repositoryContext-test2.xml")
-public class PatronServiceImplTest {
+class PatronServiceImplTest {
 
 	@Autowired
 	private PatronService patronService;
-	
-	private static final int PORT = 12389;
-	private static final String ROOT_DN = "dc=inflinx,dc=com";
-
-	@Before
-	public void setup() throws Exception {
-		System.out.println("Inside the setup");
-		LdapUnitUtils.loadData(new ClassPathResource("patrons.ldif"), PORT);
-	}
-	
-	@After
-	public void teardown() throws Exception {
-		System.out.println("Inside the teardown");
-		LdapUnitUtils.clearSubContexts(new DistinguishedName(ROOT_DN), PORT);
-	}
 
 	@Test
-	public void testService() {
+	void should_create_a_patron() {
 		Patron patron = new Patron();
 		patron.setDn(new DistinguishedName("uid=patron10001,ou=patrons,dc=inflinx,dc=com"));
 		patron.setFirstName("Patron");
@@ -55,23 +34,43 @@ public class PatronServiceImplTest {
 		patronService.create(patron);
 		
 		// Lets read the patron
-		patron = patronService.find("patron10001");
+		Patron result = patronService.find("patron10001");
+		assertAll(
+				() -> assertNotNull(result),
+				() -> assertEquals(patron.getDn().toString(), result.getDn().toString())
+		);
+	}
+
+
+	@Test
+	void should_find_a_patron() {
+		Patron result = patronService.find("patron100");
+		assertAll(
+				() -> assertNotNull(result),
+				() -> assertEquals("uid=patron100,ou=patrons,dc=inflinx,dc=com", result.getDn().toString())
+		);
+	}
+
+
+	@Test
+	void should_delete_a_patron() {
+		patronService.delete("patron92");
+
+		assertThrows(NameNotFoundException.class, ()-> patronService.find("patron92"));
+	}
+
+
+	@Test
+	void should_update_a_patron() {
+		Patron patron = patronService.find("patron1");
 		assertNotNull(patron);
-		
+
 		patron.setTelephoneNumber("8018640850");
 		patronService.update(patron);
-		
-		patron = patronService.find("patron10001");
+
+		patron = patronService.find("patron1");
 		assertEquals(patron.getTelephoneNumber(), "8018640850");
-		
-		patronService.delete("patron10001");
-		try {
-			patron = patronService.find("patron10001");
-			assertNull(patron);
-		}
-		catch(NameNotFoundException e) {
-			
-		}
+
 	}
 	
 }

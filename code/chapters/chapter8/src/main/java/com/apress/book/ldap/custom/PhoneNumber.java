@@ -11,6 +11,30 @@ public class PhoneNumber {
 		this.extension = extension;
 	}
 
+	public int getAreaCode() {
+		return areaCode;
+	}
+
+	public void setAreaCode(int areaCode) {
+		this.areaCode = areaCode;
+	}
+
+	public int getExchange() {
+		return exchange;
+	}
+
+	public void setExchange(int exchange) {
+		this.exchange = exchange;
+	}
+
+	public int getExtension() {
+		return extension;
+	}
+
+	public void setExtension(int extension) {
+		this.extension = extension;
+	}
+
 	public boolean equals(Object obj) {
 		if(obj == null || obj.getClass() != this.getClass()) { return false; }
 		PhoneNumber p = (PhoneNumber) obj;

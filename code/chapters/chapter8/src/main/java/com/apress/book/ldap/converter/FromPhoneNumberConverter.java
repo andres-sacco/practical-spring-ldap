@@ -1,5 +1,6 @@
-package com.apress.book.ldap.custom;
+package com.apress.book.ldap.converter;
 
+import com.apress.book.ldap.custom.PhoneNumber;
 import org.springframework.ldap.odm.typeconversion.impl.Converter;
 
 public class FromPhoneNumberConverter implements Converter  {
@@ -12,5 +13,4 @@ public class FromPhoneNumberConverter implements Converter  {
 		}
 		return result;
 	}
-
 }

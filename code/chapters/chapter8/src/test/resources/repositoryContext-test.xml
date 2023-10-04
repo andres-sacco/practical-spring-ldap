@@ -1,71 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns:context="http://www.springframework.org/schema/context"
-		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-		
-		<context:component-scan base-package="com.inflinx.book.ldap" />
-		
-		<bean id="contextSource" class="org.ldapunit.context.EmbeddedContextSourceFactory">
-        	<property name="port" value="12389" />
-        	<property name="rootDn" value="dc=inflinx,dc=com" />
-        	<property name="serverType" value="OPENDJ" /> 
-		</bean>
-		
-		<bean id="odmManager" class="org.springframework.ldap.odm.core.impl.OdmManagerImpl">
-			<constructor-arg name="converterManager" ref="converterManager" />
-			<constructor-arg name="contextSource" ref="contextSource" />
-			<constructor-arg name="managedClasses">
-				<set>
-					<value>com.apress.book.ldap.domain.Patron</value>
-				</set>
-			</constructor-arg>
-		</bean>
-				
-		<bean id="fromStringConverter" class="org.springframework.ldap.odm.typeconversion.impl.converters.FromStringConverter" />
-		<bean id="toStringConverter" class="org.springframework.ldap.odm.typeconversion.impl.converters.ToStringConverter" />
-	
-		<!-- Configuration information for a single instance of FromString -->
-		<bean id="fromStringConverterConfig" class="org.springframework.ldap.odm.typeconversion.impl.ConverterManagerFactoryBean$ConverterConfig">
-			<property name="converter" ref="fromStringConverter" />
-			<property name="fromClasses">
-				<set>
-					<value>java.lang.String</value>
-				</set>
-			</property>
-			<property name="toClasses">
-				<set>
-					<value>java.lang.Byte</value>
-					<value>java.lang.Integer</value>
-					<value>java.lang.Boolean</value>
-				</set>
-			</property>
-		</bean>
-		
-		<bean id="toStringCoverterConfig" class="org.springframework.ldap.odm.typeconversion.impl.ConverterManagerFactoryBean$ConverterConfig">
-			<property name="converter" ref="toStringConverter" />
-			<property name="fromClasses">
-				<set>
-					<value>java.lang.Byte</value>
-					<value>java.lang.Integer</value>
-					<value>java.lang.Boolean</value>
-				</set>
-			</property>
-			<property name="toClasses">
-				<set>
-					<value>java.lang.String</value>
-				</set>
-			</property>
-		</bean>
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ldap="http://www.springframework.org/schema/ldap"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           https://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/ldap https://www.springframework.org/schema/ldap/spring-ldap.xsd">
 
-		<bean id="converterManager" class="org.springframework.ldap.odm.typeconversion.impl.ConverterManagerFactoryBean">
-			<property name="converterConfig">
-				<set>
-					<ref bean="fromStringConverterConfig"/>
-					<ref bean="toStringCoverterConfig"/>
-				</set>
-			</property>
-		</bean>
-		
-</beans>		
+	<bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:ldap.properties" />
+	</bean>
+
+	<ldap:context-source id="contextSource"
+						 password="${ldap.password}"
+						 url="${ldap.url}"
+						 username="${ldap.userDn}"/>
+
+	<!-- Populates the LDAP server with initial data -->
+	<bean class="org.springframework.ldap.test.LdifPopulator" depends-on="embeddedLdapServer">
+		<property name="contextSource" ref="contextSource" />
+		<property name="resource" value="classpath:patrons.ldif" />
+		<property name="base" value="${ldap.base}" />
+		<property name="clean" value="${ldap.clean}" />
+		<property name="defaultBase" value="${ldap.base}" />
+	</bean>
+
+	<bean id="embeddedLdapServer" class="org.springframework.ldap.test.unboundid.EmbeddedLdapServerFactoryBean">
+		<property name="partitionName" value="inflinx"/>
+		<property name="partitionSuffix" value="${ldap.base}" />
+		<property name="port" value="${ldap.port}" />
+	</bean>
+
+	<bean id="ldapTemplate" class="org.springframework.ldap.core.LdapTemplate">
+		<constructor-arg ref="contextSource" />
+	</bean>
+
+	<bean id="patronService" class="com.apress.book.ldap.service.PatronServiceImpl"/>
+
+</beans>
