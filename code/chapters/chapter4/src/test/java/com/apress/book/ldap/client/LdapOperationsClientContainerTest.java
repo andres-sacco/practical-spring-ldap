@@ -1,6 +1,7 @@
 package com.apress.book.ldap.client;
 
 import com.apress.book.ldap.domain.Patron;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @Testcontainers
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration("classpath:repositoryContext-testcontainers.xml")
-public class LdapOperationsClientContainerTest {
+@DisplayName("LDAP Operations Test using Testcontainers")
+class LdapOperationsClientContainerTest {
 
     @Container
     public static DockerComposeContainer ldap = new DockerComposeContainer(
@@ -30,7 +32,8 @@ public class LdapOperationsClientContainerTest {
     LdapOperationsClient client;
 
     @Test
-    public void should_remove_patron() {
+    @DisplayName("Check that operation remove works")
+    void should_remove_patron() {
 
         client.remove("patron100");
 
@@ -40,14 +43,16 @@ public class LdapOperationsClientContainerTest {
     }
 
     @Test
-    public void should_return_patrons() {
+    @DisplayName("Check that operation search return a patron")
+    void should_return_patrons() {
         List<Patron> patrons = client.search();
 
         assertAll(() -> assertNotNull(patrons), () -> assertEquals(100, patrons.size()));
     }
 
     @Test
-    public void should_add_patron() {
+    @DisplayName("Check that operation add create a new entry on the LDAP")
+    void should_add_patron() {
         Patron patron = new Patron(null, "Andres", "Sacco", "Andres Sacco", "sacco.andres@inflix.com");
         client.add("patron102", patron);
 

@@ -1,6 +1,5 @@
 package com.apress.book.ldap.client;
 
-import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.BasicAttribute;
@@ -56,17 +55,14 @@ public class LdapOperationsClient {
     }
 
     public List<Patron> search() {
-        return ldapTemplate.search("dc=inflinx,dc=com", "(objectclass=person)", new AttributesMapper() {
-            @Override
-            public Object mapFromAttributes(Attributes attributes) throws NamingException {
-                Patron patron = new Patron();
-                patron.setUid((String) attributes.get("uid").get());
-                patron.setFirstName((String) attributes.get("givenName").get());
-                patron.setLastName((String) attributes.get("sn").get());
-                patron.setEmail((String) attributes.get("mail").get());
-                patron.setCommonName((String) attributes.get("cn").get());
-                return patron;
-            }
+        return ldapTemplate.search("dc=inflinx,dc=com", "(objectclass=person)", (AttributesMapper) attributes -> {
+            Patron patron = new Patron();
+            patron.setUid((String) attributes.get("uid").get());
+            patron.setFirstName((String) attributes.get("givenName").get());
+            patron.setLastName((String) attributes.get("sn").get());
+            patron.setEmail((String) attributes.get("mail").get());
+            patron.setCommonName((String) attributes.get("cn").get());
+            return patron;
         });
     }
 }

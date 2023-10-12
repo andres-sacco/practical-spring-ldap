@@ -1,12 +1,14 @@
 package com.apress.book.ldap.mocks;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class CalculatorTest {
+@DisplayName("Calculator tests cases")
+class CalculatorTest {
 
     private MathService mathService;
 
@@ -19,7 +21,8 @@ public class CalculatorTest {
     }
 
     @Test
-    public void should_sum_two_numbers() {
+    @DisplayName("Check that the sum of two numbers is okay")
+    void should_sum_two_numbers() {
         // Given - Creating the mocks
         when(mathService.add(1, 4)).thenReturn(5);
 

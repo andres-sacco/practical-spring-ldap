@@ -2,6 +2,7 @@ package com.apress.book.ldap.client;
 
 import com.apress.book.ldap.domain.Patron;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.ldap.core.AttributesMapper;
 import org.springframework.ldap.core.LdapTemplate;
@@ -16,7 +17,8 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class LdapOperationsClientMockTest {
+@DisplayName("LDAP Operations Test using mocks")
+class LdapOperationsClientMockTest {
 
     LdapOperationsClient client;
     LdapTemplate ldapTemplate;
@@ -28,7 +30,8 @@ public class LdapOperationsClientMockTest {
     }
 
     @Test
-    public void should_return_patrons() {
+    @DisplayName("Check that operation search return a patron")
+    void should_return_patrons() {
         Attributes attribute = new BasicAttributes();
         attribute.put("sn", "Sacco");
         attribute.put("givenName", "Andres");
