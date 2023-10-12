@@ -1,6 +1,5 @@
 package com.apress.book.ldap;
 
-
 import com.apress.book.ldap.dao.impl.JndiLdapDaoImpl;
 import com.apress.book.ldap.domain.Employee;
 
@@ -11,20 +10,20 @@ import javax.naming.directory.ModificationItem;
 public class App {
     public static void main(String[] args) {
         JndiLdapDaoImpl jli = new JndiLdapDaoImpl();
-        //Search
+        // Search
         jli.search();
 
-        //Add and search
+        // Add and search
         jli.addEmployee(getEmployee());
         jli.search();
 
-        //Remove and search
+        // Remove and search
         jli.remove("uid=employee29,ou=employees,dc=inflinx,dc=com");
         jli.search();
 
-        //Update and search
+        // Update and search
         BasicAttribute attribute = new BasicAttribute("givenName", "Andy");
-        ModificationItem[] items = {new ModificationItem(DirContext.REPLACE_ATTRIBUTE, attribute)};
+        ModificationItem[] items = { new ModificationItem(DirContext.REPLACE_ATTRIBUTE, attribute) };
         jli.update("uid=employee30,ou=employees,dc=inflinx,dc=com", items);
         jli.search();
     }
@@ -37,7 +36,7 @@ public class App {
         employee.setEmail("sacco.andres@gmail.com");
 
         employee.setUid("employee30");
-        employee.setPhone(new String[]{"+54 9 1161484"});
+        employee.setPhone(new String[] { "+54 9 1161484" });
         employee.setCommonName("Andres");
         return employee;
     }

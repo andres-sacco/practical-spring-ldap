@@ -37,7 +37,7 @@ public class JndiLdapDaoImpl implements JndiLdapDao {
     private DirContext getContext() throws NamingException {
         Properties environment = new Properties();
         environment.setProperty(INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-        environment.setProperty(PROVIDER_URL, "ldap://localhost:1389");
+        environment.setProperty(PROVIDER_URL, "ldap://localhost:11389");
         environment.setProperty(SECURITY_AUTHENTICATION, "simple");
         environment.setProperty(SECURITY_PRINCIPAL, "cn=Directory Manager");
         environment.setProperty(SECURITY_CREDENTIALS, "secret");

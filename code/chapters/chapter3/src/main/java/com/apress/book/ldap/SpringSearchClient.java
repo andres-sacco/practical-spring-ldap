@@ -2,9 +2,6 @@ package com.apress.book.ldap;
 
 import java.util.List;
 
-import javax.naming.NamingException;
-import javax.naming.directory.Attributes;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -15,20 +12,18 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SpringSearchClient {
-	
-	@Autowired
-	@Qualifier("ldapTemplate")
+
 	private LdapTemplate ldapTemplate;
-	
+	@Autowired
+	public SpringSearchClient(@Qualifier("ldapTemplate") LdapTemplate ldapTemplate) {
+		this.ldapTemplate = ldapTemplate;
+	}
+
 	@SuppressWarnings("unchecked")
 	public List<String> search() {
 		
 		return ldapTemplate.search("dc=inflinx,dc=com", "(objectclass=person)",
-				new AttributesMapper() {
-					@Override
-					public Object mapFromAttributes(Attributes attributes) throws NamingException {
-						return (String)attributes.get("cn").get();
-					} });
+                (AttributesMapper) attributes -> (String)attributes.get("cn").get());
 	}
 
 	public static void main(String[] args) {

@@ -45,7 +45,6 @@ public class Employee {
         this.email = email;
     }
 
-
     public String getEmployeeNumber() {
         return employeeNumber;
     }
@@ -73,8 +72,8 @@ public class Employee {
     @Override
     public String toString() {
         return "Employee [uid=" + uid + ", firstName=" + firstName + ", lastName=" + lastName + ", commonName="
-                + commonName + ", email=" + email  + ", employeeNumber="
-                + employeeNumber + ", phone=" + Arrays.toString(phone) + "]";
+                + commonName + ", email=" + email + ", employeeNumber=" + employeeNumber + ", phone="
+                + Arrays.toString(phone) + "]";
     }
 
 }

@@ -16,42 +16,46 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class LdapOperationsClient {
-	@Autowired
-	@Qualifier("ldapTemplate")
-	private LdapTemplate ldapTemplate;
-	
-	public void addPatron() {
-		// Set the Patron attributes
-		Attributes attributes = new BasicAttributes();
-		attributes.put("sn", "Patron999");
-		attributes.put("cn", "New Patron999");
 
-		// Add the multi-valued attribute
-		BasicAttribute objectClassAttribute = new BasicAttribute("objectclass");
-		objectClassAttribute.add("top");
-		objectClassAttribute.add("person");
-		objectClassAttribute.add("organizationalperson");
-		objectClassAttribute.add("inetorgperson");
-		attributes.put(objectClassAttribute);
+    private LdapTemplate ldapTemplate;
 
-		ldapTemplate.bind("uid=patron999,ou=patrons,dc=inflinx,dc=com", null, attributes);
-	}
-	
-	public void addTelephoneNumber() {
-		Attribute attribute = new BasicAttribute("telephoneNumber", "801 100 1000");
-		ModificationItem item = new ModificationItem(DirContext.ADD_ATTRIBUTE, attribute);
-		ldapTemplate.modifyAttributes("uid=patron999,ou=patrons,dc=inflinx,dc=com", new ModificationItem[] {item});
-	}
-	
-	public void removePatron() {
-		ldapTemplate.unbind("uid=patron999,ou=patrons,dc=inflinx,dc=com");
-	}
-	
-	public static void main(String[] args) {
-		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
-		LdapOperationsClient client = context.getBean(LdapOperationsClient.class);
-		client.addPatron();
-		client.addTelephoneNumber();
-		client.removePatron();
-	}
+    @Autowired
+    public LdapOperationsClient(@Qualifier("ldapTemplate") LdapTemplate ldapTemplate) {
+        this.ldapTemplate = ldapTemplate;
+    }
+
+    public void addPatron() {
+        // Set the Patron attributes
+        Attributes attributes = new BasicAttributes();
+        attributes.put("sn", "Patron999");
+        attributes.put("cn", "New Patron999");
+
+        // Add the multi-valued attribute
+        BasicAttribute objectClassAttribute = new BasicAttribute("objectclass");
+        objectClassAttribute.add("top");
+        objectClassAttribute.add("person");
+        objectClassAttribute.add("organizationalperson");
+        objectClassAttribute.add("inetorgperson");
+        attributes.put(objectClassAttribute);
+
+        ldapTemplate.bind("uid=patron999,ou=patrons,dc=inflinx,dc=com", null, attributes);
+    }
+
+    public void addTelephoneNumber() {
+        Attribute attribute = new BasicAttribute("telephoneNumber", "801 100 1000");
+        ModificationItem item = new ModificationItem(DirContext.ADD_ATTRIBUTE, attribute);
+        ldapTemplate.modifyAttributes("uid=patron999,ou=patrons,dc=inflinx,dc=com", new ModificationItem[] { item });
+    }
+
+    public void removePatron() {
+        ldapTemplate.unbind("uid=patron999,ou=patrons,dc=inflinx,dc=com");
+    }
+
+    public static void main(String[] args) {
+        ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
+        LdapOperationsClient client = context.getBean(LdapOperationsClient.class);
+        client.addPatron();
+        client.addTelephoneNumber();
+        client.removePatron();
+    }
 }
