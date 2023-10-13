@@ -15,16 +15,17 @@ import java.util.List;
 
 import static org.springframework.ldap.query.LdapQueryBuilder.query;
 
-@Component("searchFilter")
+@Component("searchBuilder")
 public class SearchBuilder {
-    private static final Logger logger = LoggerFactory.getLogger(com.apress.book.ldap.filter.SearchFilter.class);
-
-    @Autowired
-    @Qualifier("ldapTemplate")
+    private static final Logger logger = LoggerFactory.getLogger(SearchBuilder.class);
     private LdapTemplate ldapTemplate;
 
-    public List<Patron> getPatronByLastNameAndPostalCode(String lastName, String postalCode) {
+    public SearchBuilder(@Autowired @Qualifier("ldapTemplate") LdapTemplate ldapTemplate) {
+        this.ldapTemplate = ldapTemplate;
+    }
 
+    public List<Patron> getPatronByLastNameAndPostalCode(String lastName, String postalCode) {
+        logger.info("finding patrons with lastname {} and postalcode {}", lastName, postalCode);
         LdapQuery query = query().countLimit(10).base(LdapUtils.emptyLdapName()).where("objectclass").is("person")
                 .and("sn").is(lastName).and("postalCode").is(postalCode).and("uid").isPresent();
 

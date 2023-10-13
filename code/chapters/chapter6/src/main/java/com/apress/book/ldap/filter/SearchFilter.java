@@ -16,9 +16,11 @@ import org.springframework.stereotype.Component;
 public class SearchFilter {
     private static final Logger logger = LoggerFactory.getLogger(SearchFilter.class);
 
-    @Autowired
-    @Qualifier("ldapTemplate")
     private LdapTemplate ldapTemplate;
+
+    public SearchFilter(@Autowired @Qualifier("ldapTemplate") LdapTemplate ldapTemplate) {
+        this.ldapTemplate = ldapTemplate;
+    }
 
     public List<Patron> searchAndPrintResults(Filter filter) {
         List<Patron> results = ldapTemplate.search("ou=patrons,dc=inflinx,dc=com", filter.encode(),
