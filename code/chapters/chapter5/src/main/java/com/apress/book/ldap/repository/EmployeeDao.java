@@ -6,13 +6,13 @@ import com.apress.book.ldap.domain.Employee;
 
 public interface EmployeeDao {
 
-    public void create(Employee employee);
+    void create(Employee employee);
 
-    public void update(Employee employee);
+    void update(Employee employee);
 
-    public void delete(String id);
+    void delete(String id);
 
-    public Employee find(String id);
+    Employee find(String id);
 
-    public List<Employee> findAll();
+    List<Employee> findAll();
 }

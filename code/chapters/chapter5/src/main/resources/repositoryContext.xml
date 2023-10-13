@@ -18,5 +18,5 @@
 		<constructor-arg ref="contextSource"  />
 	</bean>
 
-	<bean id="employeeDao" class="com.apress.book.ldap.repository.EmployeeDaoLdapImpl"></bean>
+	<bean id="employeeDao" class="com.apress.book.ldap.repository.EmployeeDaoLdapImpl"/>
 </beans>

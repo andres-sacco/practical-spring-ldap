@@ -41,6 +41,6 @@ public class JndiObjectFactoryLookupExample {
     public static void main(String[] args) {
         JndiObjectFactoryLookupExample jle = new JndiObjectFactoryLookupExample();
         Patron p = jle.lookupPatron("uid=patron99,ou=patrons,dc=inflinx,dc=com");
-        System.out.println(p);
+        logger.info(p.toString());
     }
 }

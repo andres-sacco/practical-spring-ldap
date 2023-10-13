@@ -14,7 +14,7 @@ public class PatronObjectFactory implements DirObjectFactory {
 
     @Override
     public Object getObjectInstance(Object obj, Name name, Context nameCtx, Hashtable<?, ?> environment,
-            Attributes attrs) throws Exception {
+            Attributes attrs) {
 
         Patron patron = new Patron();
         patron.setUid(attrs.get("uid").toString());
@@ -24,8 +24,7 @@ public class PatronObjectFactory implements DirObjectFactory {
     }
 
     @Override
-    public Object getObjectInstance(Object obj, Name name, Context nameCtx, Hashtable<?, ?> environment)
-            throws Exception {
+    public Object getObjectInstance(Object obj, Name name, Context nameCtx, Hashtable<?, ?> environment) {
 
         return getObjectInstance(obj, name, nameCtx, environment, new BasicAttributes());
     }
