@@ -12,6 +12,7 @@ import org.springframework.ldap.ldif.parser.LdifParser;
 public class SimpleLdifParser {
 
     private static final Logger logger = LoggerFactory.getLogger(SimpleLdifParser.class);
+
     public void parse(File file) throws IOException {
         LdifParser parser = new LdifParser(file);
         parser.open();

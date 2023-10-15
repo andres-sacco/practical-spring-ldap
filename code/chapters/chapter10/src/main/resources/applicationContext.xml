@@ -6,18 +6,14 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 		<context:component-scan base-package="com.apress.book.ldap" />
-		
+
 		<bean id="contextSource" class="org.springframework.ldap.core.support.LdapContextSource">
         	<property name="url" value="ldap://localhost:11389" />
         	<property name="userDn" value="cn=Directory Manager" />
 			<property name="password" value="secret" />
 		</bean>
-		
+
 		<bean id="ldapTemplate" class="org.springframework.ldap.core.LdapTemplate">
 			<constructor-arg ref="contextSource"  />
 		</bean>
-
-		<bean id="authenticationDao" class="com.apress.book.ldap.repository.AuthenticationDaoImpl"/>
-		<bean id="authenticationDao2" class="com.apress.book.ldap.repository.AuthenticationDaoImpl2"/>
-		<bean id="authenticationDao3" class="com.apress.book.ldap.repository.AuthenticationDaoImpl3"/>
 </beans>		

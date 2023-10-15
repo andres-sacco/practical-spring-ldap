@@ -13,6 +13,7 @@ import org.springframework.ldap.schema.BasicSchemaSpecification;
 
 public class SimpleLdifParser2 {
     private static final Logger logger = LoggerFactory.getLogger(SimpleLdifParser2.class);
+
     public void parse(File file) throws IOException {
         LdifParser parser = new LdifParser(file);
         parser.setAttributeValidationPolicy(new DefaultAttributeValidationPolicy());

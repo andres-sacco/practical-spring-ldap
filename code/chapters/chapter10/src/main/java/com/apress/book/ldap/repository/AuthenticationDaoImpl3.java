@@ -13,14 +13,18 @@ public class AuthenticationDaoImpl3 implements AuthenticationDao {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationDaoImpl3.class);
 
-    @Autowired
-    @Qualifier("ldapTemplate")
+    public static final String BASE_DN = "ou=patrons,dc=inflinx,dc=com";
+
     private LdapTemplate ldapTemplate;
+
+    public AuthenticationDaoImpl3(@Autowired @Qualifier("ldapTemplate") LdapTemplate ldapTemplate) {
+        this.ldapTemplate = ldapTemplate;
+    }
 
     @Override
     public boolean authenticate(String userid, String password) {
         EmployeeAuthenticationErrorCallback errorCallback = new EmployeeAuthenticationErrorCallback();
-        boolean isAuthenticated = ldapTemplate.authenticate("", "(uid=" + userid + ")", password, errorCallback);
+        boolean isAuthenticated = ldapTemplate.authenticate(BASE_DN, "(uid=" + userid + ")", password, errorCallback);
         if (!isAuthenticated) {
             logger.info(errorCallback.getAuthenticationException().getMessage());
         }

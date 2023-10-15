@@ -7,8 +7,8 @@ public class EmployeeAuthenticationErrorCallback implements AuthenticationErrorC
     private Exception authenticationException;
 
     @Override
-    public void execute(Exception e) {
-        this.authenticationException = e;
+    public void execute(Exception ex) {
+        this.authenticationException = ex;
     }
 
     public Exception getAuthenticationException() {

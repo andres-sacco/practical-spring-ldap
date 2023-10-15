@@ -8,12 +8,16 @@ import org.springframework.stereotype.Repository;
 @Repository("authenticationDao2")
 public class AuthenticationDaoImpl2 implements AuthenticationDao {
 
-    @Autowired
-    @Qualifier("ldapTemplate")
+    public static final String BASE_DN = "ou=patrons,dc=inflinx,dc=com";
+
     private LdapTemplate ldapTemplate;
+
+    public AuthenticationDaoImpl2(@Autowired @Qualifier("ldapTemplate") LdapTemplate ldapTemplate) {
+        this.ldapTemplate = ldapTemplate;
+    }
 
     @Override
     public boolean authenticate(String userid, String password) {
-        return ldapTemplate.authenticate("", "(uid=" + userid + ")", password);
+        return ldapTemplate.authenticate(BASE_DN, "(uid=" + userid + ")", password);
     }
 }
