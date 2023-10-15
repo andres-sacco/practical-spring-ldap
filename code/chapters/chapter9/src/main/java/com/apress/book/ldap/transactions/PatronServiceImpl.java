@@ -17,13 +17,15 @@ public class PatronServiceImpl implements PatronService {
 
     private static final Logger logger = LoggerFactory.getLogger(PatronServiceImpl.class);
 
-    @Autowired
-    @Qualifier("patronDao")
     private PatronDao patronDao;
+
+    public PatronServiceImpl(@Autowired @Qualifier("patronDao") PatronDao patronDao) {
+        this.patronDao = patronDao;
+    }
 
     @Override
     public void create(Patron patron) {
-        logger.info("Begining the transaction");
+        logger.info("Beginning the transaction");
         patronDao.create(patron);
         logger.info("Ending the patron creation");
         throw new RuntimeException(); // Will roll back the transaction

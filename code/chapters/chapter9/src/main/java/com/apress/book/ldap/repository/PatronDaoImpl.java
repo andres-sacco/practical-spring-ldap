@@ -12,17 +12,21 @@ import org.springframework.ldap.core.DistinguishedName;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.filter.EqualsFilter;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository("patronDao")
+@Transactional
 public class PatronDaoImpl implements PatronDao {
 
     private static final Logger logger = LoggerFactory.getLogger(PatronDaoImpl.class);
 
     private static final String PATRON_BASE = "ou=patrons,dc=inflinx,dc=com";
 
-    @Autowired
-    @Qualifier("ldapTemplate")
     private LdapTemplate ldapTemplate;
+
+    public PatronDaoImpl(@Autowired @Qualifier("ldapTemplate") LdapTemplate ldapTemplate) {
+        this.ldapTemplate = ldapTemplate;
+    }
 
     @Override
     public void create(Patron patron) {
@@ -64,7 +68,7 @@ public class PatronDaoImpl implements PatronDao {
     @Override
     public Patron find(String id) {
         EqualsFilter filter = new EqualsFilter("uid", id);
-        return (Patron) ldapTemplate.searchForObject(PATRON_BASE, filter.encode(), new PatronContextMapper());
+        return ldapTemplate.searchForObject(PATRON_BASE, filter.encode(), new PatronContextMapper());
     }
 
 }

@@ -6,13 +6,13 @@ import com.apress.book.ldap.domain.Patron;
 
 public interface PatronService {
 
-    public void create(Patron patron);
+    void create(Patron patron);
 
-    public void create(List<Patron> patronList);
+    void create(List<Patron> patronList);
 
-    public void delete(String id);
+    void delete(String id);
 
-    public void update(Patron patron);
+    void update(Patron patron);
 
-    public Patron find(String id);
+    Patron find(String id);
 }

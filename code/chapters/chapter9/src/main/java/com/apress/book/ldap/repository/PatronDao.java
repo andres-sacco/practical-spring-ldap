@@ -3,12 +3,11 @@ package com.apress.book.ldap.repository;
 import com.apress.book.ldap.domain.Patron;
 
 public interface PatronDao {
+    void create(Patron patron);
 
-    public void create(Patron patron);
+    void delete(String id);
 
-    public void delete(String id);
+    void update(Patron patron);
 
-    public void update(Patron patron);
-
-    public Patron find(String id);
+    Patron find(String id);
 }
