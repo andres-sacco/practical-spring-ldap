@@ -10,32 +10,34 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("patronServiceCustom")
 @Transactional
 public class PatronServiceImpl implements PatronService {
-	
-	private static final String PATRON_BASE  = "ou=patrons,dc=inflinx,dc=com";
 
-	@Autowired
-	@Qualifier("ldapTemplate")
-	private LdapTemplate ldapTemplate;
+    private static final String PATRON_BASE = "ou=patrons,dc=inflinx,dc=com";
 
-	@Override
-	public void create(Patron patron) {
-		ldapTemplate.create(patron);
-	}
+    private LdapTemplate ldapTemplate;
 
-	@Override
-	public void update(Patron patron) {
-		ldapTemplate.update(patron);
-	}
+    public PatronServiceImpl(@Autowired @Qualifier("ldapTemplate") LdapTemplate ldapTemplate) {
+        this.ldapTemplate = ldapTemplate;
+    }
 
-	@Override
-	public Patron find(String id) {
-		DistinguishedName dn = new DistinguishedName(PATRON_BASE);
-		dn.add("uid", id);
-		return ldapTemplate.findByDn(dn, Patron.class);
-	}
+    @Override
+    public void create(Patron patron) {
+        ldapTemplate.create(patron);
+    }
 
-	@Override
-	public void delete(String id) {
-		ldapTemplate.delete(find(id));
-	}
+    @Override
+    public void update(Patron patron) {
+        ldapTemplate.update(patron);
+    }
+
+    @Override
+    public Patron find(String id) {
+        DistinguishedName dn = new DistinguishedName(PATRON_BASE);
+        dn.add("uid", id);
+        return ldapTemplate.findByDn(dn, Patron.class);
+    }
+
+    @Override
+    public void delete(String id) {
+        ldapTemplate.delete(find(id));
+    }
 }

@@ -9,32 +9,34 @@ import com.apress.book.ldap.domain.Patron;
 
 @Service("patronService")
 public class PatronServiceImpl implements PatronService {
-	
-	private static final String PATRON_BASE  = "ou=patrons,dc=inflinx,dc=com";
-	
-	@Autowired
-	@Qualifier("ldapTemplate")
-	private LdapTemplate ldapTemplate;
 
-	@Override
-	public void create(Patron patron) {
-		ldapTemplate.create(patron);
-	}
+    private static final String PATRON_BASE = "ou=patrons,dc=inflinx,dc=com";
 
-	@Override
-	public void update(Patron patron) {
-		ldapTemplate.update(patron);
-	}
+    private LdapTemplate ldapTemplate;
 
-	@Override
-	public Patron find(String id) {
-		DistinguishedName dn = new DistinguishedName(PATRON_BASE);
-		dn.add("uid", id);
-		return ldapTemplate.findByDn(dn, Patron.class);
-	}
-	
-	@Override
-	public void delete(String id) {
-		ldapTemplate.delete(find(id));
-	}
+    public PatronServiceImpl(@Autowired @Qualifier("ldapTemplate") LdapTemplate ldapTemplate) {
+        this.ldapTemplate = ldapTemplate;
+    }
+
+    @Override
+    public void create(Patron patron) {
+        ldapTemplate.create(patron);
+    }
+
+    @Override
+    public void update(Patron patron) {
+        ldapTemplate.update(patron);
+    }
+
+    @Override
+    public Patron find(String id) {
+        DistinguishedName dn = new DistinguishedName(PATRON_BASE);
+        dn.add("uid", id);
+        return ldapTemplate.findByDn(dn, Patron.class);
+    }
+
+    @Override
+    public void delete(String id) {
+        ldapTemplate.delete(find(id));
+    }
 }

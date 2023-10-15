@@ -1,57 +1,59 @@
 package com.apress.book.ldap.custom;
 
 public class PhoneNumber {
-	private int areaCode;
-	private int exchange;
-	private int extension;
-	
-	public PhoneNumber(int areaCode, int exchange, int extension) {
-		this.areaCode = areaCode;
-		this.exchange = exchange;
-		this.extension = extension;
-	}
+    private int areaCode;
+    private int exchange;
+    private int extension;
 
-	public int getAreaCode() {
-		return areaCode;
-	}
+    public PhoneNumber(int areaCode, int exchange, int extension) {
+        this.areaCode = areaCode;
+        this.exchange = exchange;
+        this.extension = extension;
+    }
 
-	public void setAreaCode(int areaCode) {
-		this.areaCode = areaCode;
-	}
+    public int getAreaCode() {
+        return areaCode;
+    }
 
-	public int getExchange() {
-		return exchange;
-	}
+    public void setAreaCode(int areaCode) {
+        this.areaCode = areaCode;
+    }
 
-	public void setExchange(int exchange) {
-		this.exchange = exchange;
-	}
+    public int getExchange() {
+        return exchange;
+    }
 
-	public int getExtension() {
-		return extension;
-	}
+    public void setExchange(int exchange) {
+        this.exchange = exchange;
+    }
 
-	public void setExtension(int extension) {
-		this.extension = extension;
-	}
+    public int getExtension() {
+        return extension;
+    }
 
-	public boolean equals(Object obj) {
-		if(obj == null || obj.getClass() != this.getClass()) { return false; }
-		PhoneNumber p = (PhoneNumber) obj;
-		return (this.areaCode ==  p.areaCode) && (this.exchange == p.exchange) && (this.extension == p.extension);
-	}
+    public void setExtension(int extension) {
+        this.extension = extension;
+    }
 
-	public String toString() {
-		return String.format("+1 %03d %03d %04d", areaCode, exchange, extension);
-	}
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        PhoneNumber p = (PhoneNumber) obj;
+        return (this.areaCode == p.areaCode) && (this.exchange == p.exchange) && (this.extension == p.extension);
+    }
 
-	// satisfies the hashCode contract
-	public int hashCode() {
-		int result = 17;
-		result = 37 * result + areaCode;
-		result = 37 * result + exchange;
-		result = 37 * result + extension;
-		
-		return result;
-	}
+    public String toString() {
+        return String.format("+1 %03d %03d %04d", areaCode, exchange, extension);
+    }
+
+    // satisfies the hashCode contract
+    public int hashCode() {
+        int result = 17;
+        result = 37 * result + areaCode;
+        result = 37 * result + exchange;
+        result = 37 * result + extension;
+
+        return result;
+    }
 }
