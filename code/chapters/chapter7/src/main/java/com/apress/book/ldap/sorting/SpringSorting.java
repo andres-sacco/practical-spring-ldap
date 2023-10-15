@@ -15,20 +15,18 @@ import org.springframework.ldap.core.DirContextProcessor;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.core.support.AbstractContextMapper;
 import org.springframework.ldap.filter.EqualsFilter;
-import org.springframework.ldap.query.LdapQuery;
-import org.springframework.ldap.support.LdapUtils;
 import org.springframework.stereotype.Component;
-
-import static org.springframework.ldap.query.LdapQueryBuilder.query;
 
 @Component("sorting")
 public class SpringSorting {
 
     private static final Logger logger = LoggerFactory.getLogger(SpringSorting.class);
 
-    @Autowired
-    @Qualifier("ldapTemplate")
     private LdapTemplate ldapTemplate;
+
+    public SpringSorting(@Autowired @Qualifier("ldapTemplate") LdapTemplate ldapTemplate) {
+        this.ldapTemplate = ldapTemplate;
+    }
 
     public List<String> sortByLocation() {
 
@@ -73,7 +71,7 @@ public class SpringSorting {
             }
         };
 
-        List<String> lastNames = ldapTemplate.search("", equalsFilter.encode(), searchControls, lastNameMapper, scdcp);
+        List<String> lastNames = ldapTemplate.search("ou=patrons,dc=inflinx,dc=com", equalsFilter.encode(), searchControls, lastNameMapper, scdcp);
 
         for (String ln : lastNames) {
             logger.info(ln);

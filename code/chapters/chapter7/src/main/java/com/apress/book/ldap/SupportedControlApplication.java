@@ -15,6 +15,7 @@ import javax.naming.directory.InitialDirContext;
 public class SupportedControlApplication {
 
     private static final Logger logger = LoggerFactory.getLogger(SupportedControlApplication.class);
+
     public void displayControls() {
 
         String ldapUrl = "ldap://localhost:11389";

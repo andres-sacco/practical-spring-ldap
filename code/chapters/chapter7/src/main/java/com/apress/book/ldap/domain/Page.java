@@ -14,8 +14,8 @@ public class Page {
     public Page() {
 
     }
-    public Page(int pageSize, int numberElements, int actualPage,
-                      PagedResultsCookie cookie) {
+
+    public Page(int pageSize, int numberElements, int actualPage, PagedResultsCookie cookie) {
         this.pageSize = pageSize;
         this.numberElements = numberElements;
         this.actualPage = actualPage;

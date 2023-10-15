@@ -23,9 +23,11 @@ public class SpringPaging {
 
     private static final Logger logger = LoggerFactory.getLogger(SpringPaging.class);
 
-    @Autowired
-    @Qualifier("ldapTemplate")
     private LdapTemplate ldapTemplate;
+
+    public SpringPaging(@Autowired @Qualifier("ldapTemplate") LdapTemplate ldapTemplate) {
+        this.ldapTemplate = ldapTemplate;
+    }
 
     public void pagedResults() {
 
@@ -61,7 +63,7 @@ public class SpringPaging {
         SearchControls searchControls = new SearchControls();
         searchControls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 
-        if(page.getCookie() != null) {
+        if (page.getCookie() != null) {
             pageNumber = page.getActualPage();
             cookie = page.getCookie();
         }
@@ -70,14 +72,15 @@ public class SpringPaging {
         PagedResultsDirContextProcessor processor = new PagedResultsDirContextProcessor(20, cookie);
         EqualsFilter equalsFilter = new EqualsFilter("objectClass", "inetOrgPerson");
 
-        List<String> lastNames = ldapTemplate.search("", equalsFilter.encode(), searchControls,
-                new LastNameMapper(), processor);
+        List<String> lastNames = ldapTemplate.search("", equalsFilter.encode(), searchControls, new LastNameMapper(),
+                processor);
 
         for (String l : lastNames) {
             logger.info(l);
         }
 
-        return new Pagination(lastNames, new Page(processor.getPageSize(), processor.getResultSize(), pageNumber + 1 , processor.getCookie()));
+        return new Pagination(lastNames,
+                new Page(processor.getPageSize(), processor.getResultSize(), pageNumber + 1, processor.getCookie()));
     }
 
     private class LastNameMapper extends AbstractContextMapper<String> {
